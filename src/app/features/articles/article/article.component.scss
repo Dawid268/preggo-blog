@@ -1,0 +1,77 @@
+@import '/src/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  &__article {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    max-width: 1200px;
+
+    &__title {
+      max-width: 500px;
+      margin-bottom: 15px;
+      word-break: break-all;
+    }
+
+    &__created {
+      margin-bottom: 15px;
+      text-transform: capitalize;
+    }
+
+    &__image {
+      max-width: 100%;
+      border-radius: 8px;
+      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
+        0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    }
+
+    &__info {
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+      align-items: center;
+
+      &__actions {
+        display: flex;
+        align-items: center;
+
+        &__share {
+          margin-left: 50px;
+          color: $blueGreyDarkest;
+        }
+
+        &__favorite {
+          color: $lightCrimson;
+        }
+
+        mat-icon {
+          cursor: pointer;
+          height: 30px;
+          width: 30px;
+          font-size: 30px;
+        }
+      }
+    }
+
+    &__tags {
+      display: flex;
+      margin: 20px;
+      width: 100%;
+
+      &__item {
+        margin: 0px 1px;
+        cursor: pointer;
+        color: $lightCrimson;
+      }
+    }
+
+    &__description {
+      word-break: break-all;
+      margin-bottom: 20px;
+    }
+  }
+}

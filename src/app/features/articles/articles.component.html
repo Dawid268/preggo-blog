@@ -1,0 +1,18 @@
+<div class="base-container container">
+  <div *ngIf="!selectedArticle; else article">
+    <app-article-list
+      [articles]="articles"
+      (selectedArticle)="getSelectedArticle($event)"
+    ></app-article-list>
+  </div>
+</div>
+<ng-template #article>
+  <div class="container__back-button">
+    <app-button
+      [text]="'ARTICLES.BACK'"
+      [icon]="'arrow_back'"
+      (emitClickEvent)="backToArticlesList()"
+    ></app-button>
+  </div>
+  <app-article [article]="selectedArticle"></app-article>
+</ng-template>

@@ -1,0 +1,77 @@
+@import './colors.scss';
+
+.base-container {
+  padding: 10px 25px;
+}
+
+.button-desktop {
+  border-radius: 8px;
+  padding: 6px;
+  background-color: $lightCrimson;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  cursor: pointer;
+
+  mat-icon {
+    color: $blueGreyDarkest;
+    height: 20px;
+    width: 20px;
+    font-size: 20px;
+  }
+
+  span {
+    text-shadow: 0.2px 0.2px $blueGreyLightest;
+  }
+}
+
+.extra-small {
+  font-size: 8px;
+  color: $blueGreyDarkest;
+}
+
+.extra-small-2x {
+  font-size: 16px;
+  color: $blueGreyDarkest;
+}
+
+.small {
+  font-size: 12px;
+  text-shadow: 0.2px 0.2px $blueGrey;
+  color: $blueGreyLightest;
+}
+
+.small-2x {
+  font-size: 24px;
+  color: $blueGreyDarkest;
+}
+
+.medium {
+  font-size: 14px;
+  color: $blueGrey;
+}
+
+.medium-l {
+  font-size: 22px;
+  color: $blueGreyDarkest;
+}
+
+.large {
+  font-size: 16px;
+  color: $blueGreyDarkest;
+}
+
+.extra-large {
+  font-size: 18px;
+  color: $blueGreyDarkest;
+  font-weight: 800;
+  text-shadow: 0.3px 0.3px $blueGreyLightest;
+}
+
+.large-2x {
+  font-size: 32px;
+  color: $blueGreyDarkest;
+  font-weight: 800;
+  text-shadow: 0.3px 0.3px $blueGreyLightest;
+}

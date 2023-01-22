@@ -1,0 +1,14 @@
+<div class="container">
+  <div *ngFor="let article of articles">
+    <div class="container__article" (click)="selectArticle(article.id)">
+      <div class="container__article__data">
+        <span class="small article__data"> {{ article.created }}</span>
+        <span class="extra-large article__title"> {{ article.title }}</span>
+        <span class="large article__description">{{
+          article.shortDescription
+        }}</span>
+      </div>
+      <img class="small article__image" [src]="article.img" alt="coś tam" />
+    </div>
+  </div>
+</div>

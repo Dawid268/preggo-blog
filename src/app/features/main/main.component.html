@@ -1,1 +1,16 @@
-<p>main worksdasdasdasdasdasdasdasdasda!</p>
+<div class="main-container">
+  <div style="display: flex; align-items: stretch; flex-direction: column">
+    <app-top-bar></app-top-bar>
+  </div>
+  <div
+    style="
+      display: flex;
+      align-items: stretch;
+      flex-direction: column;
+      height: 100%;
+      overflow-y: auto;
+    "
+  >
+    <router-outlet></router-outlet>
+  </div>
+</div>

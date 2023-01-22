@@ -1,0 +1,11 @@
+<div class="base-container main-container">
+  <span class="large-2x main-container__title">preggo</span>
+  <div class="main-container__menu">
+    <div class="main-container__menu__container">
+      <div *ngFor="let item of menu" class="container__item">
+        <span class="large"> {{ item.name | translate }} </span>
+      </div>
+    </div>
+    <app-button [text]="'TOP_BAR.SUBSCRIBE'"></app-button>
+  </div>
+</div>
