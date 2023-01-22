@@ -1,0 +1,10 @@
+{
+  "TOP_BAR": {
+    "BLOG": "blog",
+    "ACCOUNT": "moje konto",
+    "SUBSCRIBE": "subskrybuj"
+  },
+  "ARTICLES": {
+    "BACK": "Powrót do listy"
+  }
+}

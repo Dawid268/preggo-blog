@@ -1,5 +1,27 @@
+@import './global.scss';
+@import './colors.scss';
+
 html,
 body {
   height: 100%;
   margin: 0;
+  font-family: Roboto, 'Helvetica Neue', sans-serif;
 }
+
+@font-face {
+  font-family: 'SourceSansPro';
+  src: local('SourceSansPro'),
+    url(./assets/SourceSansPro-Regular.ttf) format('truetype');
+}
+
+span,
+h1,
+h2,
+h3,
+h4,
+button {
+  font-family: 'SourceSansPro';
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

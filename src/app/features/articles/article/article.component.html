@@ -1,0 +1,37 @@
+<div class="base-container container">
+  <div class="container__article">
+    <span class="large-2x container__article__title">
+      {{ article?.title }}
+    </span>
+    <div class="container__article__info">
+      <span class="large container__article__created">
+        {{ article?.created }}
+      </span>
+      <div class="container__article__info__actions">
+        <mat-icon class="container__article__info__actions__favorite">{{
+          article?.isLiked ? 'favorite' : 'favorite_border'
+        }}</mat-icon>
+
+        <mat-icon
+          class="container__article__info__actions__share"
+          aria-hidden="false"
+          aria-label="Example home icon"
+          fontIcon="share"
+        ></mat-icon>
+      </div>
+    </div>
+    <img class="container__article__image" [src]="article?.img" />
+
+    <div class="container__article__tags">
+      <span
+        class="large container__article__tags__item"
+        *ngFor="let tag of article?.tags"
+      >
+        {{ tag }}
+      </span>
+    </div>
+    <span class="medium-l container__article__description">
+      {{ article?.shortDescription }}
+    </span>
+  </div>
+</div>

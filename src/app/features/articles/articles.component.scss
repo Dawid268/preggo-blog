@@ -1,0 +1,10 @@
+@import '/src/colors.scss';
+
+.container {
+  display: flex;
+  flex-direction: column;
+
+  &__back-button {
+    width: 150px;
+  }
+}
