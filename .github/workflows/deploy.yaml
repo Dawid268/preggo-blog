@@ -61,7 +61,7 @@ jobs:
           # Note: tags has to be all lower-case
           tags: |
 
-            preggo-blog/simple:latest
+            dawid268/preggo:blog
           # build on feature branches, push only on main branch
           # push: ${{ github.ref == 'refs/heads/main' }}
 
