@@ -35,8 +35,7 @@ jobs:
         run: echo ${{ steps.docker_build.outputs.digest }}
   deploy:
     runs-on: ubuntu-latest   
-    needs: [push_to_docker_hub]
-    
+    needs: [build-and-push-docker-image]
     steps:
       - name: Deploy to VPS
         uses: appleboy/ssh-action@master
