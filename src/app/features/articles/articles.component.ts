@@ -4,7 +4,11 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { ComponentStore } from '@ngrx/component-store';
 import { UntilDestroy, untilDestroyed } from '@ngneat/until-destroy';
 
-import { Article, ArticlesStore } from './articles.store';
+import { Article, ArticlesState, ArticlesStore } from './articles.store';
+import { filter } from 'rxjs';
+import { setFontColorFn } from '@shared/utils';
+import { defaultDateFormat } from '@shared/const';
+import { BaseFacade, ScreenSize } from '@app/state/base';
 
 @UntilDestroy()
 @Component({
@@ -16,14 +20,34 @@ import { Article, ArticlesStore } from './articles.store';
 export class ArticlesComponent implements OnInit {
   public selectedArticle: Article | null = null;
   public articles: Article[] = [];
+  public size: ArticlesState['size'] = 5;
+  public page: ArticlesState['page'] = 0;
+  public totalPages: ArticlesState['totalPages'] = 0;
+  public newestArticle: Article | null = null;
+  public defaultDateFormat = defaultDateFormat;
+  public screenSize$ = this.baseFacade.screeSize$;
+  public sizes = ScreenSize;
 
   constructor(
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private readonly articlesStore: ArticlesStore
+    private readonly articlesStore: ArticlesStore,
+    private baseFacade: BaseFacade
   ) {}
 
   public ngOnInit(): void {
+    this.articlesStore.articlesData$
+      .pipe(
+        untilDestroyed(this),
+        filter(({ articles }) => !!articles?.length)
+      )
+      .subscribe(({ articles, page, size, totalPages, newestArticle }) => {
+        this.articles = articles;
+        this.page = page;
+        this.size = size;
+        this.totalPages = totalPages;
+        this.newestArticle = newestArticle;
+      });
     this.getAllArticles();
     const { id } = this.activatedRoute.snapshot.queryParams;
 
@@ -32,35 +56,32 @@ export class ArticlesComponent implements OnInit {
     }
   }
 
-  public getSelectedArticle(id: Article['id']): void {
-    this.articlesStore.getArticle(id);
-    this.articlesStore
-      .selectArticle()
-      .pipe(untilDestroyed(this))
-      .subscribe(article => {
-        this.selectedArticle = article;
-        this.router.navigate([], {
-          relativeTo: this.activatedRoute,
-          queryParams: { id },
-          queryParamsHandling: 'merge',
-        });
-      });
+  public getSelectedArticle(id: Article['id'] | undefined): void {
+    if (!id) {
+      return;
+    }
+
+    this.router.navigate([id]);
   }
 
   private getAllArticles(): void {
-    this.articlesStore.getAllArticles();
-    this.articlesStore
-      .selectArticles()
-      .pipe(untilDestroyed(this))
-      .subscribe(articles => (this.articles = articles));
+    this.articlesStore.getAllArticles({ page: this.page, size: this.size });
   }
 
-  public backToArticlesList(): void {
-    this.articlesStore.removeArticle();
-    this.router.navigate([], {
-      relativeTo: this.activatedRoute,
-      queryParams: { id: null },
-      queryParamsHandling: 'merge',
-    });
+  public getPagedArticles(page = this.page, size = this.size): void {
+    this.articlesStore.getAllArticles({ page, size });
+  }
+
+  onScroll(): void {
+    this.page++;
+    if (this.page === this.totalPages) {
+      return;
+    }
+
+    this.getAllArticles();
+  }
+
+  public setFontColor(backgroundColor: string): string {
+    return setFontColorFn(backgroundColor);
   }
 }

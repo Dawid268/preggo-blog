@@ -1,14 +1,40 @@
-<div class="container">
-  <div *ngFor="let article of articles">
-    <div class="container__article" (click)="selectArticle(article.id)">
-      <div class="container__article__data">
-        <span class="small article__data"> {{ article.created }}</span>
-        <span class="extra-large article__title"> {{ article.title }}</span>
-        <span class="large article__description">{{
-          article.shortDescription
-        }}</span>
-      </div>
-      <img class="small article__image" [src]="article.img" alt="coś tam" />
+<div
+  class="container"
+  [ngClass]="{
+    'container--mobile': screen === sizes.XSmall,
+    'container--medium': screen === sizes.Small || screen === sizes.Medium
+  }"
+  *ngIf="articles?.length"
+>
+  <div
+    *ngFor="let article of articles"
+    class="article"
+    [ngClass]="{
+      'article--mobile': screen === sizes.XSmall
+    }"
+    (click)="selectArticle(article.id)"
+  >
+    <img class="article__image" [src]="article.imageUrl" />
+    <span class="small article__date">
+      {{ article.created | date: 'dd/MM/yyyy' }}</span
+    >
+    <span class="title-small article__title"> {{ article.title }}</span>
+    <span class="small article__description">
+      {{ article.shortDescription }}</span
+    >
+    <div class="article__body">
+      <ng-container *ngFor="let tag of article?.tags | slice: 0 : 2">
+        <span
+          appColors
+          [baseColor]="tag.color"
+          [setBackgroundColor]="true"
+          [customOpacityText]="1"
+          [customOpacityBackground]="0.1"
+          class="small article__tag"
+        >
+          {{ tag.name }}
+        </span>
+      </ng-container>
     </div>
   </div>
 </div>

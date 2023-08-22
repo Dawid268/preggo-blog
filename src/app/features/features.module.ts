@@ -4,6 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 
 import { TranslateModule } from '@ngx-translate/core';
 import { MatIconModule } from '@angular/material/icon';
+import { InfiniteScrollModule } from 'ngx-infinite-scroll';
 
 import {
   ArticleListComponent,
@@ -14,7 +15,9 @@ import {
 } from '.';
 
 import { AppRoutingModule } from '@app/app-routing.module';
-import { ButtonComponent } from '@shared/components';
+import { ButtonComponent, PaginationComponent } from '@shared/components';
+import { ColorsDirective } from '@shared/directives/colors.directive';
+import { MaterialModule } from '@shared/material.module';
 
 const components = [
   MainComponent,
@@ -23,7 +26,7 @@ const components = [
   ArticleListComponent,
   ArticleComponent,
 ];
-const sharedComponents = [ButtonComponent];
+const sharedComponents = [ButtonComponent, PaginationComponent];
 
 @NgModule({
   declarations: [...components],
@@ -33,6 +36,9 @@ const sharedComponents = [ButtonComponent];
     HttpClientModule,
     AppRoutingModule,
     MatIconModule,
+    ColorsDirective,
+    InfiniteScrollModule,
+    MaterialModule,
     ...sharedComponents,
   ],
 })

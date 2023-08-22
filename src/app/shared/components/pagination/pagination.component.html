@@ -1,0 +1,28 @@
+<div class="pagination">
+  <div class="pagination__button">
+    <mat-icon>arrow_back</mat-icon>
+
+    <span
+      (click)="emitPaginationEvent(page - 1)"
+      class="large pagination__item"
+    >
+      {{ 'PAGINATION.PREVIOUS' | translate }}</span
+    >
+  </div>
+  <div>
+    <span
+      class="large"
+      *ngFor="let item of pagesArray"
+      class="pagination__item pagination__item__value"
+      [class.pagination__item__value--active]="item === page"
+      (click)="emitPaginationEvent(item)"
+      >{{ item + 1 }}</span
+    >
+  </div>
+  <div class="pagination__button" (click)="emitPaginationEvent(page + 1)">
+    <span class="large pagination__item">{{
+      'PAGINATION.NEXT' | translate
+    }}</span>
+    <mat-icon>arrow_forward</mat-icon>
+  </div>
+</div>

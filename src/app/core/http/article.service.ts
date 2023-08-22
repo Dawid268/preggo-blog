@@ -1,21 +1,74 @@
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
-import { Article } from '@features/articles/articles.store';
+import { Article, ArticleResponse } from '@features/articles/articles.store';
+import { environment } from 'src/environments/environment';
+import { PaginationParams, PaginationResponse } from '@shared/interfaces';
+import { parseQueryParams } from '@shared/utils';
 
 @Injectable()
 export class ArticleService {
   constructor(private httpClient: HttpClient) {}
 
-  public getArticles(): Observable<Article[]> {
-    return this.httpClient.get<Article[]>('/assets/articles.mock.json');
+  public getArticles(
+    pagination: PaginationParams
+  ): Observable<PaginationResponse<Article[]>> {
+    const params = parseQueryParams({
+      size: pagination.size,
+      page: pagination.page,
+    });
+    return this.httpClient
+      .get<PaginationResponse<ArticleResponse[]>>(
+        `${environment.api}/blog/articles`,
+        { params }
+      )
+      .pipe(
+        map(({ content, page, size, sort, totalElements, totalPages }) => ({
+          page,
+          size,
+          sort,
+          totalElements,
+          totalPages,
+          content: content?.map(
+            ({ created, id, imageUrl, slug, translations, tags }) => ({
+              id,
+              created,
+              imageUrl,
+              title: translations?.titlePl,
+              shortDescription: translations?.bodyPl,
+              slug,
+              isLiked: false,
+              tags: tags?.map(({ id, namePl: name, color }) => ({
+                id,
+                name,
+                color,
+              })),
+            })
+          ),
+        }))
+      );
   }
 
   public getArticleById(id: Article['id']): Observable<Article> {
-    return this.httpClient.get<Article>('/assets/article.mock.json', {
-      params: new HttpParams().append('id', id),
-    });
+    return this.httpClient
+      .get<ArticleResponse>(`${environment.api}/blog/articles/${id}`)
+      .pipe(
+        map(({ created, id, imageUrl, slug, translations, tags }) => ({
+          id,
+          created,
+          imageUrl,
+          title: translations?.titlePl,
+          shortDescription: translations?.bodyPl,
+          slug,
+          isLiked: false,
+          tags: tags?.map(({ id, namePl: name, color }) => ({
+            id,
+            name,
+            color,
+          })),
+        }))
+      );
   }
 }

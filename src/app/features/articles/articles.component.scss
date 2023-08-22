@@ -1,10 +1,140 @@
 @import '/src/colors.scss';
 
+.articles-container {
+  width: 100%;
+  height: calc(100% - 61px);
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
 .container {
   display: flex;
   flex-direction: column;
+  align-items: center;
 
-  &__back-button {
-    width: 150px;
+  &__newest-article {
+    cursor: pointer;
+    width: 1005px;
+    height: 600px;
+    display: grid;
+
+    margin-bottom: 50px;
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr;
+
+    &--medium {
+      width: 654px;
+      height: 400px;
+    }
+  }
+
+  &--medium {
+    padding: 0px;
+  }
+}
+
+.newest-article {
+  &__image {
+    width: 1005px;
+    height: 600px;
+    grid-column: 1;
+    grid-row: 1;
+
+    &--medium {
+      width: 654px;
+      height: 400px;
+    }
+
+    &__body {
+      grid-column: 1;
+      grid-row: 1;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 25px;
+      width: calc(1005px - 50px);
+      gap: 25px;
+
+      &--medium {
+        width: calc(654px - 50px);
+      }
+    }
+  }
+}
+
+.body {
+  &__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+
+  &__title {
+    word-wrap: break-word;
+    color: $white;
+    text-transform: capitalize;
+  }
+
+  &__date {
+    color: $white;
+  }
+}
+
+.tags {
+  &__item {
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 16px;
+    color: $white;
+    text-transform: capitalize;
+  }
+}
+
+.article {
+  display: flex;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+  cursor: pointer;
+  width: 80%;
+  align-self: center;
+
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
+  }
+
+  &__tag {
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 16px;
+    text-transform: capitalize;
+    color: $white;
+  }
+
+  &__title,
+  &__description {
+    word-break: break-word;
+    text-transform: capitalize;
+    align-self: flex-start;
+  }
+
+  &__image {
+    width: 100%;
+    height: 100%;
+    object-fit: fill;
+  }
+
+  &__date {
+    align-self: flex-start;
+    color: $fontDate;
+  }
+
+  &__description {
+    color: $fontDescription;
   }
 }

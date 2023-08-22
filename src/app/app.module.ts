@@ -9,13 +9,13 @@ import {
   TranslateModule,
   TranslateModuleConfig,
 } from '@ngx-translate/core';
-import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { CoreModule } from '@core/core.module';
 import { FeaturesModule } from '@features/features.module';
 import { Language } from './shared';
+import { AppStoreModule } from './state';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -39,8 +39,8 @@ const translateModuleConfig: TranslateModuleConfig = {
     HttpClientModule,
     FeaturesModule,
     CoreModule,
-    StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: !isDevMode() }),
     BrowserAnimationsModule,
+    AppStoreModule,
   ],
   providers: [],
   bootstrap: [AppComponent],

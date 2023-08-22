@@ -1,16 +1,7 @@
-<div class="main-container">
+<div class="main-container" *ngIf="screenSize$ | async as screen">
   <div style="display: flex; align-items: stretch; flex-direction: column">
-    <app-top-bar></app-top-bar>
+    <app-top-bar [screen]="screen"></app-top-bar>
   </div>
-  <div
-    style="
-      display: flex;
-      align-items: stretch;
-      flex-direction: column;
-      height: 100%;
-      overflow-y: auto;
-    "
-  >
-    <router-outlet></router-outlet>
-  </div>
+
+  <router-outlet></router-outlet>
 </div>

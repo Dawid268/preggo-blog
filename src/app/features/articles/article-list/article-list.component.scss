@@ -1,56 +1,71 @@
 @import '/src/colors.scss';
+@import '/src/global.scss';
 
 .container {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
 
-  &__article {
-    background-color: $white;
-    display: flex;
-    margin: 10px 0;
-    border-radius: 8px;
-    padding: 15px;
-    max-width: 800px;
-    height: 150px;
-    box-shadow: 1px 1px $thistle;
-    cursor: pointer;
+  &--medium {
+    grid-template-columns: repeat(2, 1fr);
+  }
 
-    &__data {
-      display: flex;
-      flex-direction: column;
-      max-width: 450px;
-    }
+  &--mobile {
+    grid-template-columns: repeat(1, 1fr);
+    justify-items: center;
   }
 }
 
 .article {
-  &__data {
-    margin-bottom: 10px;
-    text-transform: capitalize;
+  display: flex;
+  width: 300px;
+  padding: 16px;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16px;
+  cursor: pointer;
+
+  &--mobile {
+    width: 80%;
+    align-self: center;
+    gap: 8px;
   }
 
-  &__title {
-    text-transform: capitalize;
-    margin-bottom: 5px;
+  &__body {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5px;
+    width: 100%;
   }
 
+  &__tag {
+    cursor: pointer;
+    padding: 4px 10px;
+    border-radius: 16px;
+    text-transform: capitalize;
+    color: $white;
+  }
+
+  &__title,
   &__description {
+    word-break: break-word;
     text-transform: capitalize;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-box-orient: vertical;
-    -webkit-line-clamp: 3;
+    align-self: flex-start;
   }
 
   &__image {
-    align-self: center;
-    width: 200px;
+    width: 100%;
     height: 100%;
-    border-radius: 8px;
-    margin-left: 50px;
-    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.1), 0 3px 10px 0 rgba(0, 0, 0, 0.10);
+    object-fit: fill;
+  }
+
+  &__date {
+    align-self: flex-start;
+    color: $fontDate;
+  }
+
+  &__description {
+    color: $fontDescription;
   }
 }

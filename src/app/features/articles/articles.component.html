@@ -1,18 +1,97 @@
-<div class="base-container container">
-  <div *ngIf="!selectedArticle; else article">
+<div
+  class="articles-container"
+  infinite-scroll
+  [infiniteScrollDistance]="1"
+  [infiniteScrollUpDistance]="2"
+  [infiniteScrollThrottle]="500"
+  (scrolled)="onScroll()"
+  [fromRoot]="true"
+  [infiniteScrollContainer]="'.articles-container'"
+  *ngIf="screenSize$ | async as screen"
+>
+  <div
+    class="container"
+    [ngClass]="{
+      'container--medium': screen === sizes.Small || screen === sizes.Medium
+    }"
+  >
+    <div
+      class="container__newest-article"
+      [ngClass]="{
+        'container__newest-article--medium':
+          screen === sizes.Small || screen === sizes.Medium
+      }"
+      (click)="getSelectedArticle(newestArticle?.id)"
+      *ngIf="screen !== sizes.XSmall; else mobile"
+    >
+      <img
+        class="newest-article__image"
+        [ngClass]="{
+          'newest-article__image--medium':
+            screen === sizes.Small || screen === sizes.Medium
+        }"
+        [src]="newestArticle?.imageUrl"
+      />
+      <div
+        class="newest-article__image__body"
+        [ngClass]="{
+          'newest-article__image__body--medium':
+            screen === sizes.Small || screen === sizes.Medium
+        }"
+      >
+        <span class="title body__title">
+          {{ newestArticle?.title }}
+        </span>
+        <span class="body body__date">{{
+          newestArticle?.created | date: defaultDateFormat
+        }}</span>
+        <div class="body__tags">
+          <span
+            class="medium tags__item"
+            appColors
+            [baseColor]="tag.color"
+            [customOpacityBackground]="0.8"
+            [setBackgroundColor]="true"
+            [skipFontColor]="true"
+            *ngFor="let tag of newestArticle?.tags"
+          >
+            {{ tag.name }}
+          </span>
+        </div>
+      </div>
+    </div>
+
     <app-article-list
       [articles]="articles"
       (selectedArticle)="getSelectedArticle($event)"
+      [screen]="screen"
     ></app-article-list>
   </div>
 </div>
-<ng-template #article>
-  <div class="container__back-button">
-    <app-button
-      [text]="'ARTICLES.BACK'"
-      [icon]="'arrow_back'"
-      (emitClickEvent)="backToArticlesList()"
-    ></app-button>
+
+<ng-template #mobile>
+  <div class="article" (click)="getSelectedArticle(newestArticle?.id)">
+    <img class="article__image" [src]="newestArticle?.imageUrl" />
+    <span class="small article__date">
+      {{ newestArticle?.created | date: 'dd/MM/yyyy' }}</span
+    >
+    <span class="title-small article__title"> {{ newestArticle?.title }}</span>
+    <span class="small article__description">
+      {{ newestArticle?.shortDescription }}</span
+    >
+    <div class="article__body">
+      <ng-container *ngFor="let tag of newestArticle?.tags | slice: 0 : 2">
+        <span
+          appColors
+          [baseColor]="tag.color"
+          [setBackgroundColor]="true"
+          [customOpacityText]="1"
+          [customOpacityBackground]="0.1"
+          class="small article__tag"
+        >
+          {{ tag.name }}
+        </span>
+      </ng-container>
+    </div>
   </div>
-  <app-article [article]="selectedArticle"></app-article>
 </ng-template>

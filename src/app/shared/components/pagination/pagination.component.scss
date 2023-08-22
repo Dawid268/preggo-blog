@@ -1,0 +1,47 @@
+@import '/src/colors.scss';
+
+.pagination {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+
+  &__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    border-radius: 8px;
+    background-color: white;
+    border: 1px solid $lightCrimson;
+    padding: 5px;
+
+    span {
+      font-size: small;
+      color: $lightCrimson;
+    }
+
+    mat-icon {
+      color: $lightCrimson;
+      height: 15px;
+      width: 15px;
+      font-size: 15px;
+    }
+  }
+
+  &__item {
+    cursor: pointer;
+    color: $blueGreyDarkest;
+
+    &__value {
+      padding: 2px 7px;
+      margin: 5px;
+
+      &--active {
+        color: $lightCrimson;
+        border: 1px solid $lightCrimson;
+        border-radius: 50%;
+      }
+    }
+  }
+}

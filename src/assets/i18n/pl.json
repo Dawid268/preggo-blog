@@ -1,10 +1,15 @@
 {
   "TOP_BAR": {
-    "BLOG": "blog",
+    "TITLE": "Preggo",
+    "HOME": "Home",
     "ACCOUNT": "moje konto",
     "SUBSCRIBE": "subskrybuj"
   },
   "ARTICLES": {
     "BACK": "Powrót do listy"
+  },
+  "PAGINATION": {
+    "NEXT": "Następna",
+    "PREVIOUS": "Poprzednia"
   }
 }

@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
-import { ArticlesComponent, MainComponent } from './features';
+import { ArticleComponent, ArticlesComponent, MainComponent } from './features';
 
 const routes: Routes = [
   // ,
@@ -13,13 +13,12 @@ const routes: Routes = [
         path: '',
         component: ArticlesComponent,
       },
+      {
+        path: ':id',
+        component: ArticleComponent,
+      },
     ],
   },
-
-  // {
-  //   path: '*',
-  //   redirectTo: '',
-  // },
 ];
 
 @NgModule({

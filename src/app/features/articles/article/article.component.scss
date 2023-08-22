@@ -4,29 +4,34 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  padding: 50px;
+  overflow: scroll;
+  height: calc(100% - 61px - 85px);
+  gap: 25px;
+
+  &--mobile {
+    padding: 10px;
+  }
 
   &__article {
     align-items: center;
     display: flex;
     flex-direction: column;
-    max-width: 1200px;
+    width: 860px;
+    gap: 25px;
 
-    &__title {
-      max-width: 500px;
-      margin-bottom: 15px;
-      word-break: break-all;
+    &--mobile {
+      width: 100%;
+      gap: 16px;
     }
 
-    &__created {
-      margin-bottom: 15px;
+    &__title {
+      word-break: break-all;
       text-transform: capitalize;
     }
 
     &__image {
       max-width: 100%;
-      border-radius: 8px;
-      box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2),
-        0 6px 20px 0 rgba(0, 0, 0, 0.19);
     }
 
     &__info {
@@ -34,13 +39,16 @@
       width: 100%;
       justify-content: space-between;
       align-items: center;
+      margin-bottom: 10px;
 
       &__actions {
         display: flex;
         align-items: center;
+        justify-content: center;
+        color: $fontDate;
 
         &__share {
-          margin-left: 50px;
+          margin-left: 25px;
           color: $blueGreyDarkest;
         }
 
@@ -59,19 +67,23 @@
 
     &__tags {
       display: flex;
-      margin: 20px;
+      flex-wrap: wrap;
       width: 100%;
+      gap: 8px;
 
       &__item {
-        margin: 0px 1px;
         cursor: pointer;
-        color: $lightCrimson;
+        padding: 4px 10px;
+        border-radius: 16px;
+        text-transform: capitalize;
+        color: $white;
       }
     }
 
     &__description {
       word-break: break-all;
-      margin-bottom: 20px;
+      line-height: 30px;
+      color: $fontDescription;
     }
   }
 }

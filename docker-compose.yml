@@ -1,0 +1,7 @@
+version: '3.8'
+
+services:
+  preggo_blog:
+    container_name: preggo_blog
+    image: preggo_blog:1.0.0
+    build: .

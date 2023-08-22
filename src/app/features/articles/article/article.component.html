@@ -1,37 +1,66 @@
-<div class="base-container container">
-  <div class="container__article">
-    <span class="large-2x container__article__title">
-      {{ article?.title }}
-    </span>
-    <div class="container__article__info">
-      <span class="large container__article__created">
-        {{ article?.created }}
-      </span>
-      <div class="container__article__info__actions">
-        <mat-icon class="container__article__info__actions__favorite">{{
-          article?.isLiked ? 'favorite' : 'favorite_border'
-        }}</mat-icon>
-
-        <mat-icon
-          class="container__article__info__actions__share"
-          aria-hidden="false"
-          aria-label="Example home icon"
-          fontIcon="share"
-        ></mat-icon>
-      </div>
+<div
+  class="base-container container"
+  [ngClass]="{
+    'container--mobile': data.screen === sizes.XSmall
+  }"
+  *ngIf="{
+    article: article$ | async,
+    screen: screenSize$ | async
+  } as data"
+>
+  <div
+    class="container__article"
+    [ngClass]="{
+      'container__article--mobile':
+        data.screen === sizes.XSmall || data.screen === sizes.Small
+    }"
+  >
+    <div style="align-self: flex-start">
+      <app-button
+        [icon]="'arrow_back'"
+        (emitClickEvent)="backToArticlesList()"
+      ></app-button>
     </div>
-    <img class="container__article__image" [src]="article?.img" />
-
     <div class="container__article__tags">
       <span
-        class="large container__article__tags__item"
-        *ngFor="let tag of article?.tags"
+        class="medium container__article__tags__item"
+        *ngFor="let tag of data.article?.tags"
+        appColors
+        [baseColor]="tag.color"
+        [setBackgroundColor]="true"
+        [customOpacityText]="1"
       >
-        {{ tag }}
+        {{ tag.name }}
       </span>
     </div>
-    <span class="medium-l container__article__description">
-      {{ article?.shortDescription }}
+    <span
+      class="container__article__title"
+      [ngClass]="
+        data.screen === sizes.XSmall || data.screen === sizes.Small
+          ? 'extra-large'
+          : 'title'
+      "
+    >
+      {{ data.article?.title }}
+    </span>
+    <div class="container__article__info">
+      <div class="container__article__info__actions">
+        <span class="body">
+          {{ data.article?.created | date: 'dd/MM/yyyy' }}
+        </span>
+      </div>
+    </div>
+    <img class="container__article__image" [src]="data.article?.imageUrl" />
+
+    <span
+      class="container__article__description"
+      [ngClass]="
+        data.screen === sizes.XSmall || data.screen === sizes.Small
+          ? 'medium'
+          : 'medium-l'
+      "
+    >
+      {{ data.article?.shortDescription }}
     </span>
   </div>
 </div>

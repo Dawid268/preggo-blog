@@ -1,20 +1,24 @@
 @import '/src/colors.scss';
 
 .main-container {
-  display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  background-color: $paleSilver;
+  display: flex;
+  background-color: $white;
   padding: 20px 25px;
   box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2);
+
   &__title {
     text-transform: uppercase;
+    color: $font;
+    margin-right: auto;
   }
 
   &__menu {
     display: flex;
     align-items: center;
     text-transform: capitalize;
+    margin-right: auto;
 
     &__container {
       display: flex;
