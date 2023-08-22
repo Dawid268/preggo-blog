@@ -16,6 +16,7 @@ import { CoreModule } from '@core/core.module';
 import { FeaturesModule } from '@features/features.module';
 import { Language } from './shared';
 import { AppStoreModule } from './state';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 export function HttpLoaderFactory(http: HttpClient): TranslateHttpLoader {
   return new TranslateHttpLoader(http);
@@ -41,6 +42,12 @@ const translateModuleConfig: TranslateModuleConfig = {
     CoreModule,
     BrowserAnimationsModule,
     AppStoreModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: !isDevMode(),
+      // Register the ServiceWorker as soon as the application is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }),
   ],
   providers: [],
   bootstrap: [AppComponent],

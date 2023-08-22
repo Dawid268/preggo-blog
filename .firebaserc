@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "preggo-stg": {
+      "hosting": {
+        "preggo-stg": [
+          "preggo-stg"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "preggo-stg"
+  }
+}
