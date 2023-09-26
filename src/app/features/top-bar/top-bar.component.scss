@@ -19,6 +19,24 @@
     align-items: center;
     text-transform: capitalize;
     margin-right: auto;
+    margin: 0px;
+    cursor: pointer;
+
+    &__socials {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    &__item {
+      width: 25px;
+      height: 25px;
+
+      &--mobile {
+        width: 20px;
+        height: 20px;
+      }
+    }
 
     &__container {
       display: flex;

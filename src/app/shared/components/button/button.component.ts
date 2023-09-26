@@ -9,6 +9,7 @@ import { CommonModule } from '@angular/common';
 
 import { MatIconModule } from '@angular/material/icon';
 import { TranslateModule } from '@ngx-translate/core';
+import { ScreenSize } from '@app/state/base';
 
 @Component({
   standalone: true,
@@ -21,8 +22,11 @@ import { TranslateModule } from '@ngx-translate/core';
 export class ButtonComponent {
   @Input() text = '';
   @Input() icon: string | null = null;
+  @Input() screenSize: ScreenSize = ScreenSize.Medium;
 
   @Output() emitClickEvent = new EventEmitter<void>();
+
+  public screenSizeEnum = ScreenSize;
 
   public clickEvent(): void {
     this.emitClickEvent.emit();

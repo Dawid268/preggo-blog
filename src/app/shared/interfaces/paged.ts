@@ -1,6 +1,9 @@
+import { Tag } from '@features/articles/articles.store';
+
 export interface PaginationParams {
   page: number;
   size: number;
+  tagId?: Tag['id'];
 }
 
 export interface PaginationResponse<T> {

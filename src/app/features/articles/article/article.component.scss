@@ -20,6 +20,10 @@
     width: 860px;
     gap: 25px;
 
+    &__button {
+      align-self: flex-start;
+    }
+
     &--mobile {
       width: 100%;
       gap: 16px;
@@ -61,6 +65,10 @@
           height: 30px;
           width: 30px;
           font-size: 30px;
+        }
+
+        &__date {
+          text-transform: capitalize;
         }
       }
     }

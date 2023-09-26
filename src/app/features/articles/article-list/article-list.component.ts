@@ -6,8 +6,7 @@ import {
   Output,
 } from '@angular/core';
 
-import { Article } from '../articles.store';
-import { defaultDateFormat } from '@shared/index';
+import { Article, Tag } from '../articles.store';
 import { ScreenSize } from '@app/state/base';
 
 @Component({
@@ -19,13 +18,18 @@ import { ScreenSize } from '@app/state/base';
 export class ArticleListComponent {
   @Input() articles: Article[] = [];
   @Input() screen: ScreenSize = ScreenSize.Large;
+  @Input() isLastPage: boolean = false;
 
   @Output() selectedArticle = new EventEmitter<Article['id']>();
+  @Output() emitGetArticlesByTag = new EventEmitter<Tag>();
 
   public sizes = ScreenSize;
-  public defaultDateFormat = defaultDateFormat;
 
   public selectArticle(id: Article['id']): void {
     this.selectedArticle.emit(id);
+  }
+
+  public getArticlesByTag(tag: Tag): void {
+    this.emitGetArticlesByTag.emit(tag);
   }
 }

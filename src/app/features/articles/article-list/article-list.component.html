@@ -12,18 +12,22 @@
     [ngClass]="{
       'article--mobile': screen === sizes.XSmall
     }"
-    (click)="selectArticle(article.id)"
   >
-    <img class="article__image" [src]="article.imageUrl" />
-    <span class="small article__date">
-      {{ article.created | date: 'dd/MM/yyyy' }}</span
+    <div
+      (click)="selectArticle(article.id)"
+      style="display: flex; flex-direction: column; gap: 4px"
     >
-    <span class="title-small article__title"> {{ article.title }}</span>
-    <span class="small article__description">
-      {{ article.shortDescription }}</span
-    >
+      <img class="article__image" [src]="article.imageUrl" />
+      <span class="small article__date">
+        {{ article.created | date: 'longDate' : 'GMT+2' }}</span
+      >
+      <span class="title-small article__title"> {{ article.title }}</span>
+      <span class="small article__description">
+        {{ article.shortDescription }}</span
+      >
+    </div>
     <div class="article__body">
-      <ng-container *ngFor="let tag of article?.tags | slice: 0 : 2">
+      <ng-container *ngFor="let tag of article?.tags">
         <span
           appColors
           [baseColor]="tag.color"
@@ -31,6 +35,7 @@
           [customOpacityText]="1"
           [customOpacityBackground]="0.1"
           class="small article__tag"
+          (click)="getArticlesByTag(tag)"
         >
           {{ tag.name }}
         </span>
@@ -38,3 +43,15 @@
     </div>
   </div>
 </div>
+
+<!-- <div
+  class="container__footer"
+  [ngClass]="
+    screen === sizes.XSmall
+      ? 'small container__footer--mobile'
+      : 'medium container__footer--medium'
+  "
+  *ngIf="isLastPage"
+>
+  <span [innerHTML]="'ARTICLES.FOOTER.MESSAGE' | translate"></span>
+</div> -->

@@ -34,6 +34,7 @@ interface Tag {
 export interface Article {
   id: string;
   title: string;
+  body: string;
   shortDescription: string;
   tags: Tag[];
   created: string;
