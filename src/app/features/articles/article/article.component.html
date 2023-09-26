@@ -14,25 +14,17 @@
       'container__article--mobile':
         data.screen === sizes.XSmall || data.screen === sizes.Small
     }"
+    *ngIf="data.article; else loader"
   >
-    <div style="align-self: flex-start">
+    <div class="container__article__button">
       <app-button
         [icon]="'arrow_back'"
+        [screenSize]="data.screen || sizes.Medium"
         (emitClickEvent)="backToArticlesList()"
+        [text]="'ARTICLES.BACK' | translate"
       ></app-button>
     </div>
-    <div class="container__article__tags">
-      <span
-        class="medium container__article__tags__item"
-        *ngFor="let tag of data.article?.tags"
-        appColors
-        [baseColor]="tag.color"
-        [setBackgroundColor]="true"
-        [customOpacityText]="1"
-      >
-        {{ tag.name }}
-      </span>
-    </div>
+
     <span
       class="container__article__title"
       [ngClass]="
@@ -41,26 +33,46 @@
           : 'title'
       "
     >
-      {{ data.article?.title }}
+      {{ data.article.title }}
     </span>
     <div class="container__article__info">
       <div class="container__article__info__actions">
-        <span class="body">
-          {{ data.article?.created | date: 'dd/MM/yyyy' }}
+        <span class="body container__article__info__actions__date">
+          {{ data.article.created | date: 'longDate' : 'GMT+2' }}
         </span>
       </div>
     </div>
-    <img class="container__article__image" [src]="data.article?.imageUrl" />
-
-    <span
+    <img class="container__article__image" [src]="data.article.imageUrl" />
+    <ng-container
+      *ngTemplateOutlet="tags; context: { data: data }"
+    ></ng-container>
+    <div
       class="container__article__description"
       [ngClass]="
         data.screen === sizes.XSmall || data.screen === sizes.Small
           ? 'medium'
           : 'medium-l'
       "
-      [innerHTML]="data.article?.shortDescription"
-    >
-    </span>
+      [innerHTML]="data.article.body"
+    ></div>
   </div>
 </div>
+<ng-template #tags let-data="data">
+  <div class="container__article__tags">
+    <span
+      class="medium container__article__tags__item"
+      *ngFor="let tag of data.article.tags"
+      appColors
+      [baseColor]="tag.color"
+      [setBackgroundColor]="true"
+      [customOpacityText]="1"
+    >
+      {{ tag.name }}
+    </span>
+  </div>
+</ng-template>
+<ng-template #loader>
+  <div style="height: 50%; width: 50%">
+    <app-loader></app-loader>
+  </div>
+</ng-template>

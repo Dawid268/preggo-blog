@@ -63,6 +63,7 @@
   &__date {
     align-self: flex-start;
     color: $fontDate;
+    text-transform: capitalize;
   }
 
   &__description {

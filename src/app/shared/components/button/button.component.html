@@ -1,4 +1,12 @@
 <div class="button-desktop" (click)="clickEvent()">
   <mat-icon *ngIf="icon">{{ icon }}</mat-icon>
-  <span class="large"> {{ text | translate }} </span>
+  <span
+    *ngIf="
+      screenSize !== screenSizeEnum.XSmall &&
+      screenSize !== screenSizeEnum.Small
+    "
+    class="large"
+  >
+    {{ text | translate }}
+  </span>
 </div>

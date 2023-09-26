@@ -2,6 +2,8 @@ import { Component, Input } from '@angular/core';
 import { Router } from '@angular/router';
 import { ScreenSize } from '@app/state/base';
 
+import * as social from '@shared/const/socials';
+
 interface TopBarMenu {
   name: string;
   path: string;
@@ -21,6 +23,8 @@ export class TopBarComponent {
     //   path: '',
     // },
   ];
+  public instagramLink = social.instagram;
+  public facebookLink = social.facebook;
 
   constructor(private router: Router) {}
 

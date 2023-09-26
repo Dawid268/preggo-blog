@@ -6,7 +6,10 @@
     "SUBSCRIBE": "subskrybuj"
   },
   "ARTICLES": {
-    "BACK": "Powrót do listy"
+    "BACK": "Powrót do listy",
+    "FOOTER": {
+      "MESSAGE": "To wszystkie artykuły <span class='subscribe-message'>Subskrybuj</span> aby otrzymywać powiadomienia o nowych artykułach."
+    }
   },
   "PAGINATION": {
     "NEXT": "Następna",

@@ -15,7 +15,11 @@ import {
 } from '.';
 
 import { AppRoutingModule } from '@app/app-routing.module';
-import { ButtonComponent, PaginationComponent } from '@shared/components';
+import {
+  ButtonComponent,
+  LoaderComponent,
+  PaginationComponent,
+} from '@shared/components';
 import { ColorsDirective } from '@shared/directives/colors.directive';
 import { MaterialModule } from '@shared/material.module';
 
@@ -26,7 +30,11 @@ const components = [
   ArticleListComponent,
   ArticleComponent,
 ];
-const sharedComponents = [ButtonComponent, PaginationComponent];
+const sharedComponents = [
+  ButtonComponent,
+  PaginationComponent,
+  LoaderComponent,
+];
 
 @NgModule({
   declarations: [...components],

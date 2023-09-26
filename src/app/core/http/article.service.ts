@@ -18,6 +18,7 @@ export class ArticleService {
     const params = parseQueryParams({
       size: pagination.size,
       page: pagination.page,
+      tagId: pagination.tagId,
     });
     return this.httpClient
       .get<PaginationResponse<ArticleResponse[]>>(
@@ -37,7 +38,8 @@ export class ArticleService {
               created,
               imageUrl,
               title: translations?.titlePl,
-              shortDescription: translations?.bodyPl,
+              body: translations?.bodyPl,
+              shortDescription: translations.shortDescriptionPl,
               slug,
               isLiked: false,
               tags: tags?.map(({ id, namePl: name, color }) => ({
@@ -60,7 +62,8 @@ export class ArticleService {
           created,
           imageUrl,
           title: translations?.titlePl,
-          shortDescription: translations?.bodyPl,
+          body: translations?.bodyPl,
+          shortDescription: translations.shortDescriptionPl,
           slug,
           isLiked: false,
           tags: tags?.map(({ id, namePl: name, color }) => ({

@@ -8,6 +8,7 @@
   [fromRoot]="true"
   [infiniteScrollContainer]="'.articles-container'"
   *ngIf="screenSize$ | async as screen"
+  #articlesContainer
 >
   <div
     class="container"
@@ -16,72 +17,120 @@
     }"
   >
     <div
-      class="container__newest-article"
+      class="container__selected-tag"
       [ngClass]="{
-        'container__newest-article--medium':
-          screen === sizes.Small || screen === sizes.Medium
+        'container__selected-tag--medium':
+          screen === sizes.Medium || screen === sizes.Small,
+        'container__selected-tag--small': screen === sizes.XSmall
       }"
-      (click)="getSelectedArticle(newestArticle?.id)"
-      *ngIf="screen !== sizes.XSmall; else mobile"
+      *ngIf="selectedTag"
     >
-      <img
-        class="newest-article__image"
-        [ngClass]="{
-          'newest-article__image--medium':
-            screen === sizes.Small || screen === sizes.Medium
-        }"
-        [src]="newestArticle?.imageUrl"
-      />
-      <div
-        class="newest-article__image__body"
-        [ngClass]="{
-          'newest-article__image__body--medium':
-            screen === sizes.Small || screen === sizes.Medium
-        }"
+      <span
+        appColors
+        [baseColor]="selectedTag.color"
+        [setBackgroundColor]="true"
+        [customOpacityText]="1"
+        [customOpacityBackground]="0.1"
+        class="container__selected-tag__item"
       >
-        <span class="title body__title">
-          {{ newestArticle?.title }}
-        </span>
-        <span class="body body__date">{{
-          newestArticle?.created | date: defaultDateFormat
-        }}</span>
-        <div class="body__tags">
-          <span
-            class="medium tags__item"
-            appColors
-            [baseColor]="tag.color"
-            [customOpacityBackground]="0.8"
-            [setBackgroundColor]="true"
-            [skipFontColor]="true"
-            *ngFor="let tag of newestArticle?.tags"
-          >
-            {{ tag.name }}
+        {{ selectedTag.name }}
+        <mat-icon fontIcon="close" (click)="removeSelectedTag()"></mat-icon>
+      </span>
+    </div>
+
+    <ng-container *ngIf="newestArticle">
+      <div
+        class="container__newest-article"
+        [ngClass]="{
+          'container__newest-article--medium':
+            screen === sizes.Small || screen === sizes.Medium
+        }"
+        (click)="getSelectedArticle(newestArticle.id)"
+        *ngIf="screen !== sizes.XSmall; else mobile"
+      >
+        <img
+          class="newest-article__image"
+          [ngClass]="{
+            'newest-article__image--medium':
+              screen === sizes.Small || screen === sizes.Medium
+          }"
+          [src]="newestArticle.imageUrl"
+        />
+        <div
+          class="newest-article__image__body"
+          [ngClass]="{
+            'newest-article__image__body--medium':
+              screen === sizes.Small || screen === sizes.Medium
+          }"
+        >
+          <span class="title body__title">
+            {{ newestArticle.title }}
           </span>
+          <span class="body body__date">{{
+            newestArticle.created | date: 'longDate' : 'GMT+2'
+          }}</span>
+          <div class="body__tags">
+            <span
+              class="medium tags__item"
+              appColors
+              [baseColor]="tag.color"
+              [customOpacityBackground]="0.8"
+              [setBackgroundColor]="true"
+              [skipFontColor]="true"
+              *ngFor="let tag of newestArticle?.tags"
+            >
+              {{ tag.name }}
+            </span>
+          </div>
         </div>
       </div>
-    </div>
+    </ng-container>
 
     <app-article-list
       [articles]="articles"
       (selectedArticle)="getSelectedArticle($event)"
+      (emitGetArticlesByTag)="getAllArticlesBySelectedTagTrigger($event)"
       [screen]="screen"
+      [isLastPage]="isLastPage"
     ></app-article-list>
+    <div
+      class="container__footer"
+      [ngClass]="
+        screen === sizes.XSmall
+          ? 'small container__footer--mobile'
+          : 'medium container__footer--medium'
+      "
+      *ngIf="isLastPage"
+    >
+      <span
+        class="container__footer__text"
+        [innerHTML]="'ARTICLES.FOOTER.MESSAGE' | translate"
+      ></span>
+    </div>
   </div>
 </div>
 
 <ng-template #mobile>
-  <div class="article" (click)="getSelectedArticle(newestArticle?.id)">
-    <img class="article__image" [src]="newestArticle?.imageUrl" />
-    <span class="small article__date">
-      {{ newestArticle?.created | date: 'dd/MM/yyyy' }}</span
+  <div class="article">
+    <div
+      (click)="getSelectedArticle(newestArticle?.id)"
+      style="display: flex; flex-direction: column; gap: 4px"
     >
-    <span class="title-small article__title"> {{ newestArticle?.title }}</span>
-    <span class="small article__description">
-      {{ newestArticle?.shortDescription }}</span
-    >
+      <img class="article__image" [src]="newestArticle?.imageUrl" />
+      <span class="small article__date">
+        {{ newestArticle?.created | date: 'dd/MM/yyyy' }}</span
+      >
+      <span class="title-small article__title">
+        {{ newestArticle?.title }}</span
+      >
+      <span class="small article__description">
+        {{ newestArticle?.shortDescription }}</span
+      >
+    </div>
     <div class="article__body">
-      <ng-container *ngFor="let tag of newestArticle?.tags | slice: 0 : 2">
+      <ng-container *ngFor="let tag of newestArticle?.tags">
         <span
+          (click)="getArticlesByTag(tag)"
           appColors
           [baseColor]="tag.color"
           [setBackgroundColor]="true"

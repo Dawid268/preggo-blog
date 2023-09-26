@@ -1,18 +1,10 @@
 import { Injectable } from '@angular/core';
 
 import { ComponentStore, tapResponse } from '@ngrx/component-store';
-import {
-  EMPTY,
-  Observable,
-  catchError,
-  exhaustMap,
-  switchMap,
-  tap,
-} from 'rxjs';
+import { Observable, exhaustMap, tap } from 'rxjs';
 
 import { ArticleService } from '@core/http/article.service';
 import { PaginationParams, PaginationResponse } from '@shared/interfaces';
-import { cloneDeep } from 'lodash-es';
 
 export type PaginatedArticles = Pick<
   ArticlesState,
@@ -22,6 +14,7 @@ export type PaginatedArticles = Pick<
 interface TranslationResponse {
   bodyPl: string;
   titlePl: string;
+  shortDescriptionPl: string;
 }
 
 interface TagResponse {
@@ -39,7 +32,7 @@ export interface ArticleResponse {
   tags: TagResponse[];
 }
 
-interface Tag {
+export interface Tag {
   id: string;
   name: string;
   color: string;
@@ -48,6 +41,7 @@ interface Tag {
 export interface Article {
   id: string;
   title: string;
+  body: string;
   shortDescription: string;
   tags: Tag[];
   created: string;
@@ -58,7 +52,6 @@ export interface Article {
 
 export interface ArticleDetails {
   articles: Article[];
-  newestArticle: Article | null;
   page: number;
   size: number;
   totalPages: number;
@@ -71,23 +64,24 @@ export interface ArticlesState {
   sort: string[];
   totalElements: number;
   totalPages: number;
+  isLoading: boolean;
 }
 
 @Injectable()
 export class ArticlesStore extends ComponentStore<ArticlesState> {
   public readonly articlesData$: Observable<ArticleDetails> = this.select(
     state => {
-      const sortedArticles = cloneDeep(state.articles).sort((a, b) =>
-        b.created.localeCompare(a.created)
-      );
       return {
-        articles: sortedArticles,
-        newestArticle: sortedArticles.shift() || null,
+        articles: state.articles,
         page: state.page,
         size: state.size,
         totalPages: state.totalPages,
       };
     }
+  );
+
+  public readonly isLoading$: Observable<boolean> = this.select(
+    state => state.isLoading
   );
 
   constructor(private readonly articlesService: ArticleService) {
@@ -98,12 +92,19 @@ export class ArticlesStore extends ComponentStore<ArticlesState> {
       sort: [],
       totalElements: 0,
       totalPages: 0,
+      isLoading: false,
     });
   }
+
+  readonly updateLoaderStatus = this.updater((state, isLoading: boolean) => ({
+    ...state,
+    isLoading,
+  }));
 
   readonly getAllArticles = this.effect(
     (paginationParams: Observable<PaginationParams>) => {
       return paginationParams.pipe(
+        tap(() => this.updateLoaderStatus(true)),
         exhaustMap(pagination =>
           this.articlesService.getArticles(pagination).pipe(
             tapResponse(
@@ -116,6 +117,16 @@ export class ArticlesStore extends ComponentStore<ArticlesState> {
     }
   );
 
+  readonly clearArticlesState = this.updater(state => ({
+    ...state,
+    articles: [],
+    page: 0,
+    size: 0,
+    sort: [],
+    totalElements: 0,
+    totalPages: 0,
+  }));
+
   readonly addArticles = this.updater(
     (
       state,
@@ -123,6 +134,7 @@ export class ArticlesStore extends ComponentStore<ArticlesState> {
     ): ArticlesState => ({
       ...state,
       articles: [...state.articles, ...content],
+      isLoading: false,
       ...rest,
     })
   );
